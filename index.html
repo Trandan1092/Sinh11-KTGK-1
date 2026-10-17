@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="vi">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b1020"><meta name="color-scheme" content="dark"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
 <title>Sinh 11 | Ngân hàng 100 câu Bài 1–6</title>
 <style>
 :root{--bg:#0b1020;--panel:#141c31;--panel2:#1b2741;--text:#edf3ff;--muted:#aab7d1;--accent:#8b9dff;--good:#56d6a1;--bad:#ff7e91;--line:#2d3a59}
@@ -17,6 +17,71 @@ button{cursor:pointer;border:0;border-radius:11px;padding:11px 15px;font:700  .9
 .feedback{margin-top:12px;border-radius:10px;padding:10px 12px}.correct{background:#14372f;color:#a8f3d7;border:1px solid #286a57}.incorrect{background:#3d202d;color:#ffc0ca;border:1px solid #7e3c4d}.muted{color:var(--muted)}.hidden{display:none!important}
 #result{scroll-margin-top:12px}.result-score{font-size:2.2rem;font-weight:850}.review-item{padding:13px;border-bottom:1px solid var(--line)}.review-item:last-child{border-bottom:0}.foot{font-size:.85rem;color:#8493b2;margin-top:22px}
 @media(max-width:560px){.wrap{padding:14px 10px 36px}.hero{padding:19px}.panel,.question{padding:13px}.qhead{flex-wrap:wrap}.tag{margin-left:44px}.actions button{flex:1 1 100%;min-height:46px}.opt{min-height:48px;padding:12px}.qtitle{font-size:1rem}body{font-size:16px}}
+</style>
+
+<style id="responsive">
+/* ===== RESPONSIVE: ĐIỆN THOẠI · TABLET · PC ===== */
+html{-webkit-text-size-adjust:100%}
+body{min-height:100vh;min-height:100dvh;-webkit-tap-highlight-color:transparent}
+button,label,.chip{touch-action:manipulation}
+.wrap{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right));padding-bottom:max(60px,env(safe-area-inset-bottom))}
+input,select,textarea{font-size:16px} /* tránh iOS tự zoom khi chạm vào ô nhập */
+.opt{min-height:48px;align-items:center}
+.opt input{width:20px;height:20px;flex:none;margin-top:0}
+.question{scroll-margin-top:150px}
+
+/* thanh tiến độ + điều hướng câu (dính trên cùng) */
+#quiz>.panel:first-child{position:sticky;top:0;z-index:20;background:#141c31f5;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding-top:max(12px,env(safe-area-inset-top));margin-top:0}
+#nav{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;max-height:112px;overflow:auto}
+.chip{min-width:38px;height:36px;padding:0 8px;border-radius:10px;border:1px solid #3a4968;background:#202c47;color:#d7e0f8;font-weight:800;font-size:.85rem;cursor:pointer}
+.chip.done{background:#33407a;border-color:#8b9dff}
+.chip.ok{background:#14372f;border-color:#286a57;color:#a8f3d7}
+.chip.no{background:#3d202d;border-color:#7e3c4d;color:#ffc0ca}
+
+/* thanh nút Nộp bài dính ở đáy */
+#quiz>.actions{position:sticky;bottom:0;z-index:20;margin:16px 0 0;padding:10px 0 max(10px,env(safe-area-inset-bottom));background:linear-gradient(180deg,transparent,#0b1020 35%)}
+#quiz>.actions button{flex:1 1 0;min-height:48px}
+
+/* Đúng/Sai: 2 nút cạnh nhau */
+.options.tf{grid-template-columns:1fr 1fr}
+.options.tf .opt{justify-content:center;font-weight:700}
+
+/* ĐIỆN THOẠI */
+@media (max-width:560px){
+  .wrap{padding-top:max(14px,env(safe-area-inset-top))}
+  h1{font-size:1.7rem}
+  #hint{display:none}
+  #nav{flex-wrap:nowrap;max-height:none;overflow-x:auto;overflow-y:hidden;padding-bottom:4px;scrollbar-width:none}
+  #nav::-webkit-scrollbar{display:none}
+  .chip{flex:none}
+  .toolbar{grid-template-columns:1fr 1fr}
+  .actions button{min-height:48px}
+  #quiz>.panel:first-child .stats .pill{font-size:.78rem;padding:4px 9px}
+  .qhead{flex-wrap:wrap;row-gap:8px}
+  .qtitle{flex:1 1 calc(100% - 60px);min-width:0}
+  .tag{margin-left:0}
+  .question{scroll-margin-top:120px}
+}
+/* TABLET */
+@media (min-width:561px) and (max-width:1023px){
+  .wrap{max-width:820px}
+  .toolbar{grid-template-columns:1fr 1fr}
+  .opt{padding:13px 14px}
+}
+/* PC */
+@media (min-width:1024px){
+  .wrap{max-width:1000px;padding-top:36px}
+  .toolbar{grid-template-columns:repeat(4,1fr)}
+  .question{padding:20px 22px}
+  .qtitle{font-size:1.1rem}
+  .opt{padding:12px 14px}
+  .actions button{min-width:180px}
+  #quiz>.actions button{flex:0 0 auto;min-width:200px}
+  #quiz>.actions{justify-content:flex-end}
+  .opt:hover,.chip:hover{filter:brightness(1.2)}
+}
+@media (hover:none){.opt:hover{background:transparent}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
 <body><main class="wrap">
@@ -143,4 +208,228 @@ function grade(){if(submitted)return;submitted=true;let score=0,unanswered=0;cur
 $('start').onclick=()=>{current=selected();if(!current.length){alert('Không có câu hỏi phù hợp. Hãy đổi bộ lọc nhé.');return}renderQuiz()};
 $('submit').onclick=grade;$('retry').onclick=()=>{if(!current.length)current=selected();renderQuiz()};
 $('flash').onclick=()=>{const arr=BANK.filter(q=>($('lesson').value==='all'||q.lesson===Number($('lesson').value))&&($('kind').value==='all'||q.type===$('kind').value));$('quiz').classList.add('hidden');$('result').classList.add('hidden');$('flashcards').classList.remove('hidden');$('flashContent').innerHTML=arr.map((q,i)=>`<div class="review-item"><span class="tag">${lessonNames[q.lesson].split(' · ')[0]}</span><p><b>${i+1}. ${esc(q.q)}</b></p><p><b>Đáp án:</b> ${esc(q.opts[q.a])}</p><p>${esc(q.why)}</p></div>`).join('');$('flashcards').scrollIntoView({behavior:'smooth'})};
+
+/* =====================================================================
+   BỘ MỞ RỘNG: TRẢ LỜI NGẮN + RANDOM CAO + CÂU HỎI MỚI TỪ SƠ ĐỒ
+   ===================================================================== */
+/*#Q_START*/
+BANK.push(
+/* ---------- TRẢ LỜI NGẮN ---------- */
+// Bài 1
+{lesson:1,type:"short",difficulty:"easy",q:"Sinh học nghiên cứu đối tượng nào?",groups:[["vật sống","sinh vật","sự sống","tổ chức sống"]],ans:"Vật sống / các tổ chức sống.",why:"Sinh học là ngành khoa học nghiên cứu vật sống và các cấp tổ chức sống."},
+{lesson:1,type:"short",difficulty:"medium",q:"Sắp xếp theo thứ tự từ nhỏ đến lớn: cơ thể, quần xã, tế bào, mô.",groups:[],seq:["tế bào","mô","cơ thể","quần xã"],ans:"Tế bào → mô → cơ thể → quần xã.",why:"Thứ tự: nguyên tử → phân tử → bào quan → tế bào → mô → cơ quan → hệ cơ quan → cơ thể → quần thể → quần xã → hệ sinh thái → sinh quyển."},
+{lesson:1,type:"short",difficulty:"easy",q:"Mục tiêu của sinh học là tìm hiểu hai điều gì ở sinh vật?",groups:[["cấu tạo"],["hoạt động sống","chức năng","hoạt động"]],ans:"Cấu tạo và hoạt động sống.",why:"Sơ đồ ghi mục tiêu gồm cấu tạo và hoạt động sống."},
+{lesson:1,type:"short",difficulty:"easy",q:"Trao đổi chất ở sinh vật gồm 2 quá trình nào?",groups:[["đồng hoá","đồng hóa"],["dị hoá","dị hóa"]],ans:"Đồng hoá và dị hoá.",why:"Chuyển hoá vật chất gồm đồng hoá (tổng hợp) và dị hoá (phân giải)."},
+{lesson:1,type:"short",difficulty:"medium",q:"Đồng hoá là quá trình tổng hợp hay phân giải? Năng lượng được tích luỹ hay giải phóng?",groups:[["tổng hợp"],["tích luỹ","tích lũy"]],ans:"Tổng hợp chất phức tạp từ chất đơn giản, tích luỹ năng lượng.",why:"Đồng hoá xây dựng chất hữu cơ và tích luỹ năng lượng trong liên kết hoá học."},
+{lesson:1,type:"short",difficulty:"medium",q:"Dị hoá là quá trình tổng hợp hay phân giải? Năng lượng được tích luỹ hay giải phóng?",groups:[["phân giải"],["giải phóng"]],ans:"Phân giải chất phức tạp, giải phóng năng lượng (ATP).",why:"Dị hoá phân giải chất hữu cơ và giải phóng năng lượng."},
+{lesson:1,type:"short",difficulty:"medium",q:"Sau khi ăn, đường huyết tăng thì tuyến tụy tiết hormone nào?",groups:[["insulin"]],ans:"Insulin.",why:"Insulin giúp đưa glucose vào tế bào, làm đường huyết giảm."},
+{lesson:1,type:"short",difficulty:"hard",q:"Khi đường huyết tăng, insulin giúp glucose dư chuyển thành chất dự trữ nào?",groups:[["glycogen"]],ans:"Glycogen.",why:"Glucose → glycogen (dự trữ, khi cần phân giải lấy năng lượng ATP), đường huyết giảm."},
+// Bài 2
+{lesson:2,type:"short",difficulty:"medium",q:"Nước vào rễ theo cơ chế thẩm thấu, đi từ nơi thế nước ... đến nơi thế nước ... ? (điền cao/thấp)",groups:[],seq:["cao","thấp"],ans:"Từ nơi thế nước cao (đất) đến nơi thế nước thấp (tế bào lông hút).",why:"Nước luôn di chuyển từ thế nước cao sang thế nước thấp."},
+{lesson:2,type:"short",difficulty:"hard",q:"Hấp thụ CHỦ ĐỘNG ion khoáng ở rễ cần những gì?",groups:[["atp","năng lượng"],["protein","chất mang","chất vận chuyển","bơm"]],ans:"Cần năng lượng ATP và protein vận chuyển (chất mang).",why:"Chủ động đi ngược gradient nồng độ, cần ATP và protein vận chuyển."},
+{lesson:2,type:"short",difficulty:"hard",q:"Hấp thụ THỤ ĐỘNG ion khoáng đi theo chiều nào của gradient nồng độ và có tốn ATP không?",groups:[["cao đến thấp","cao sang thấp","cao xuống thấp","cao thấp","thuận chiều","xuôi chiều"],["không tốn","không cần","không tiêu tốn","ko tốn","ko cần","không dùng"]],ans:"Từ nồng độ cao đến thấp (thuận chiều gradient), không tốn ATP.",why:"Thụ động không cần ATP, không cần protein vận chuyển."},
+{lesson:2,type:"short",difficulty:"medium",q:"Nước từ lông hút vào mạch gỗ theo 2 con đường nào?",groups:[["gian bào"],["tế bào chất","tbc","tế bào"]],ans:"Con đường gian bào và con đường tế bào chất.",why:"Hai con đường: gian bào (giữa các tế bào) và qua tế bào chất."},
+{lesson:2,type:"short",difficulty:"easy",q:"Mạch gỗ vận chuyển những chất gì và theo hướng nào?",groups:[["nước"],["khoáng","ion"],["rễ lên","dưới lên","lên lá","chiều lên"]],ans:"Nước và ion khoáng, từ rễ lên lá.",why:"Mạch gỗ: dòng đi lên, vận chuyển nước và ion khoáng."},
+{lesson:2,type:"short",difficulty:"hard",q:"Kể 3 động lực của dòng mạch gỗ.",groups:[["áp suất rễ","lực đẩy"],["lực liên kết","liên kết"],["thoát hơi nước","lực hút","lực kéo"]],ans:"Áp suất rễ (lực đẩy), lực liên kết giữa các phân tử nước, lực hút do thoát hơi nước.",why:"Ba lực cùng tạo dòng nước đi lên trong mạch gỗ."},
+{lesson:2,type:"short",difficulty:"medium",q:"NO₃⁻ trong cây được khử qua NO₂⁻ thành dạng nào để cây sử dụng?",groups:[["nh4","amoni","amon","ammonium"]],ans:"NH₄⁺.",why:"NO₃⁻ →(nitrate reductase) NO₂⁻ →(nitrite reductase) NH₄⁺."},
+{lesson:2,type:"short",difficulty:"hard",q:"Enzyme nào khử NO₃⁻ thành NO₂⁻?",groups:[["nitrate reductase","nitrat reductase","nitrate reductaza"]],ans:"Nitrate reductase.",why:"Nitrate reductase khử NO₃⁻ → NO₂⁻; nitrite reductase khử NO₂⁻ → NH₄⁺."},
+{lesson:2,type:"short",difficulty:"hard",q:"Khi NH₄⁺ trong cây quá nhiều, cây tạo chất nào để dự trữ và giải độc?",groups:[["amide","amid"]],ans:"Amide.",why:"NH₄⁺ dư thừa gây độc; cây kết hợp tạo amino acid/amide để dự trữ."},
+{lesson:2,type:"short",difficulty:"medium",q:"Nêu 2 con đường thoát hơi nước ở lá.",groups:[["khí khổng"],["cutin","bề mặt lá","biểu bì"]],ans:"Qua khí khổng (nhanh, chủ yếu) và qua lớp cutin (chậm).",why:"Khí khổng là con đường chủ yếu, cutin là con đường thứ yếu."},
+{lesson:2,type:"short",difficulty:"medium",q:"Khi ánh sáng mạnh, nhiệt độ tăng thì khí khổng và thoát hơi nước thay đổi thế nào?",groups:[["mở"],["tăng"]],ans:"Khí khổng mở rộng, thoát hơi nước tăng.",why:"Ánh sáng và nhiệt độ cao thúc đẩy khí khổng mở, thoát hơi nước tăng."},
+// Bài 4
+{lesson:4,type:"short",difficulty:"medium",q:"Nêu nguyên liệu, sản phẩm và năng lượng của quang hợp.",groups:[["co2","cacbonic","carbon dioxide"],["h2o","nước"],["glucose","glucozo","c6h12o6","đường","carbohydrate","chất hữu cơ"],["o2","oxi","oxygen"],["ánh sáng","quang năng","diệp lục"]],ans:"CO₂ + H₂O, nhờ ánh sáng và diệp lục → C₆H₁₂O₆ (glucose) + O₂.",why:"6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂ (ánh sáng, diệp lục)."},
+{lesson:4,type:"short",difficulty:"easy",q:"Quang hợp chuyển năng lượng dạng nào thành năng lượng dạng nào?",groups:[["quang năng","ánh sáng"],["hoá năng","hóa năng","năng lượng hoá học","năng lượng hóa học","liên kết hoá học","liên kết hóa học","chất hữu cơ"]],ans:"Quang năng (ánh sáng) → hoá năng (trong chất hữu cơ).",why:"Diệp lục hấp thụ quang năng, tích luỹ thành hoá năng trong chất hữu cơ."},
+{lesson:4,type:"short",difficulty:"easy",q:"Nêu 2 nhóm sắc tố quang hợp chính.",groups:[["diệp lục","chlorophyll"],["carotenoid","carotenoit"]],ans:"Diệp lục (chlorophyll) và carotenoid.",why:"Carotenoid gồm carotene và xanthophyll; diệp lục gồm a và b."},
+{lesson:4,type:"short",difficulty:"medium",q:"Pha sáng của quang hợp diễn ra ở đâu?",groups:[["màng thylakoid","thylakoid","tilacoit","grana"]],ans:"Màng thylakoid (trong lục lạp).",why:"Sắc tố và chuỗi truyền electron nằm ở màng thylakoid."},
+{lesson:4,type:"short",difficulty:"hard",q:"Pha sáng cần chất nào và tạo ra những sản phẩm nào?",groups:[["h2o","nước"],["o2","oxi","oxygen"],["atp"],["nadph"]],ans:"Cần H₂O; tạo O₂, ATP và NADPH.",why:"Pha sáng quang phân li nước, giải phóng O₂, tạo ATP và NADPH."},
+{lesson:4,type:"short",difficulty:"medium",q:"Pha tối diễn ra ở đâu và theo chu trình nào?",groups:[["stroma","chất nền"],["calvin"]],ans:"Ở stroma (chất nền lục lạp), theo chu trình Calvin.",why:"Pha tối: stroma, chu trình Calvin, cố định CO₂ tạo carbohydrate."},
+{lesson:4,type:"short",difficulty:"hard",q:"Pha tối sử dụng 2 sản phẩm nào của pha sáng?",groups:[["atp"],["nadph"]],ans:"ATP và NADPH.",why:"ATP cung cấp năng lượng, NADPH cung cấp lực khử cho chu trình Calvin."},
+{lesson:4,type:"short",difficulty:"easy",q:"Nhóm thực vật nào (C3, C4 hay CAM) thường sống ở sa mạc khô hạn?",groups:[["cam"]],bad:["c3","c4"],ans:"Thực vật CAM.",why:"CAM thích nghi vùng khô hạn: mở khí khổng ban đêm. C4 sống ở vùng nhiệt đới, cận nhiệt đới."},
+{lesson:4,type:"short",difficulty:"medium",q:"Thực vật C4 thường sống ở vùng khí hậu nào?",groups:[["nhiệt đới","cận nhiệt đới"]],ans:"Vùng nhiệt đới và cận nhiệt đới.",why:"C4 thích nghi cường độ ánh sáng và nhiệt độ cao."},
+{lesson:4,type:"short",difficulty:"hard",q:"Điểm bù ánh sáng là gì?",groups:[["quang hợp"],["hô hấp"],["bằng","cân bằng","="]],ans:"Cường độ ánh sáng mà tại đó quang hợp bằng hô hấp.",why:"Dưới điểm bù cây tiêu hao nhiều hơn tích luỹ, không sinh trưởng được."},
+{lesson:4,type:"short",difficulty:"hard",q:"Điểm bão hoà ánh sáng là gì?",groups:[["quang hợp"],["tối đa","cực đại","cao nhất","lớn nhất"]],ans:"Cường độ ánh sáng mà tại đó quang hợp đạt cực đại (tăng thêm ánh sáng cũng không tăng quang hợp).",why:"Vượt điểm bão hoà, quang hợp không tăng, thậm chí giảm."},
+{lesson:4,type:"short",difficulty:"hard",q:"Ánh sáng xanh tím chủ yếu thúc đẩy tổng hợp chất nào?",groups:[["protein","amino acid","axit amin","acid amin"]],ans:"Protein / amino acid.",why:"Ánh sáng đỏ thiên về carbohydrate, ánh sáng xanh tím thiên về amino acid → protein."},
+{lesson:4,type:"short",difficulty:"hard",q:"Ánh sáng đỏ chủ yếu thúc đẩy tổng hợp loại chất nào?",groups:[["carbohydrate","cacbohidrat","đường","tinh bột"]],ans:"Carbohydrate.",why:"Ánh sáng đỏ → carbohydrate; ánh sáng xanh tím → protein."},
+{lesson:4,type:"short",difficulty:"medium",q:"Nêu vai trò của quang hợp đối với sinh quyển (2 ý).",groups:[["chất hữu cơ","thức ăn","chất dinh dưỡng","glucose"],["cân bằng","điều hoà","điều hòa"]],ans:"Cung cấp chất hữu cơ/thức ăn cho sinh giới; cân bằng CO₂/O₂ trong khí quyển.",why:"Quang hợp cung cấp chất hữu cơ, năng lượng và điều hoà CO₂/O₂."},
+// Bài 6
+{lesson:6,type:"short",difficulty:"medium",q:"Viết phương trình tổng quát của hô hấp hiếu khí (chất tham gia, sản phẩm, năng lượng).",groups:[["c6h12o6","glucose","glucozo","đường"],["o2","oxi","oxygen"],["co2","cacbonic"],["h2o","nước"],["atp","năng lượng"]],ans:"C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + năng lượng (ATP + nhiệt).",why:"Oxi hoá hoàn toàn glucose bằng O₂, giải phóng ATP và nhiệt."},
+{lesson:6,type:"short",difficulty:"easy",q:"Nêu 3 vai trò của hô hấp ở thực vật.",groups:[["atp"],["nhiệt"],["trung gian","tổng hợp"]],ans:"Tạo ATP duy trì hoạt động sống; giải phóng nhiệt duy trì thân nhiệt; tạo sản phẩm trung gian để tổng hợp chất hữu cơ khác.",why:"Hô hấp vừa cung cấp năng lượng vừa cung cấp nguyên liệu cho tổng hợp."},
+{lesson:6,type:"short",difficulty:"medium",q:"Kể tên 3 giai đoạn của hô hấp hiếu khí.",groups:[["đường phân"],["krebs"],["electron","chuỗi truyền","chuỗi chuyền"]],ans:"Đường phân → chu trình Krebs → chuỗi truyền electron.",why:"Ngoài ra còn bước oxi hoá pyruvate tạo acetyl-CoA nối đường phân với Krebs."},
+{lesson:6,type:"short",difficulty:"easy",q:"Đường phân diễn ra ở đâu?",groups:[["tế bào chất","tbc","bào tương","cytosol"]],ans:"Tế bào chất.",why:"Đường phân không cần O₂, xảy ra ở tế bào chất."},
+{lesson:6,type:"short",difficulty:"hard",q:"Từ 1 glucose, đường phân tạo ra những gì? (số lượng pyruvate, ATP, NADH)",groups:[["2pyruvate","hai pyruvate"],["2atp","hai atp"],["2nadh","hai nadh"]],ans:"2 pyruvate, 2 ATP, 2 NADH.",why:"Đường phân: 1 glucose → 2 pyruvate + 2 ATP + 2 NADH."},
+{lesson:6,type:"short",difficulty:"medium",q:"Chuỗi truyền electron diễn ra ở đâu?",groups:[["màng trong"],["ty thể","ti thể"]],ans:"Màng trong ty thể.",why:"Đây là giai đoạn tạo nhiều ATP nhất."},
+{lesson:6,type:"short",difficulty:"hard",q:"1 NADH và 1 FADH₂ lần lượt tạo ra bao nhiêu ATP?",groups:[],seq:["2,5","1,5"],ans:"1 NADH ≈ 2,5 ATP; 1 FADH₂ ≈ 1,5 ATP.",why:"Tính ATP từ chuỗi truyền electron dựa trên hệ số 2,5 và 1,5."},
+{lesson:6,type:"short",difficulty:"medium",q:"Lên men rượu (hô hấp kị khí) tạo ra 2 sản phẩm nào?",groups:[["ethanol","etanol","rượu","cồn"],["co2","cacbonic"]],ans:"Ethanol và CO₂.",why:"Không có O₂: đường phân → pyruvate → ethanol + CO₂ (hoặc lactate)."},
+{lesson:6,type:"short",difficulty:"hard",q:"Kể 4 nhân tố ảnh hưởng đến hô hấp ở thực vật.",groups:[["nước","h2o"],["nhiệt độ"],["o2","oxi","oxygen"],["co2","cacbonic"]],ans:"Nước, nhiệt độ, O₂, CO₂.",why:"Các nhân tố ngoại cảnh chính ảnh hưởng cường độ hô hấp."},
+// Bài 7 (phần tiêu hoá ở trang cuối vở)
+{lesson:7,type:"short",difficulty:"medium",q:"Tiêu hoá nội bào sử dụng enzyme của bào quan nào?",groups:[["lysosome","lizoxom","lizosome","lyzosome"]],ans:"Lysosome.",why:"Thức ăn bị bắt vào tế bào rồi được enzyme lysosome phân giải."},
+{lesson:7,type:"short",difficulty:"easy",q:"Động vật đơn bào (chưa có cơ quan tiêu hoá) tiêu hoá theo kiểu nào?",groups:[["nội bào"]],ans:"Tiêu hoá nội bào.",why:"Chưa có cơ quan tiêu hoá, thức ăn tiêu hoá bên trong tế bào."},
+{lesson:7,type:"short",difficulty:"medium",q:"Thuỷ tức, giun dẹp (ruột khoang, giun dẹp) có cơ quan tiêu hoá dạng nào?",groups:[["túi tiêu hoá","túi"]],ans:"Túi tiêu hoá.",why:"Ruột khoang, giun dẹp có túi tiêu hoá (chưa có ống tiêu hoá)."},
+
+/* ---------- TRẮC NGHIỆM ---------- */
+{lesson:2,type:"mcq",difficulty:"medium",q:"Nước đi vào tế bào lông hút khi nào?",opts:["Thế nước của đất cao hơn thế nước của tế bào lông hút","Thế nước của đất thấp hơn thế nước của tế bào lông hút","Hai thế nước bằng nhau","Khi tế bào lông hút đóng khí khổng"],a:0,why:"Nước đi từ thế nước cao sang thế nước thấp."},
+{lesson:2,type:"mcq",difficulty:"hard",q:"Đặc điểm nào đúng với vận chuyển chủ động ion khoáng ở rễ?",opts:["Cùng chiều gradient, không tốn ATP","Ngược chiều gradient, cần ATP và protein vận chuyển","Chỉ xảy ra qua mạch rây","Không có tính chọn lọc"],a:1,why:"Chủ động: từ nơi nồng độ thấp đến nơi nồng độ cao, cần ATP + protein."},
+{lesson:2,type:"mcq",difficulty:"easy",q:"Cây trực tiếp dùng dạng nitrogen nào để tổng hợp amino acid?",opts:["N₂","NO₃⁻","NH₄⁺","NO₂⁻"],a:2,why:"NO₃⁻ phải khử thành NH₄⁺ trước khi đồng hoá."},
+{lesson:2,type:"mcq",difficulty:"medium",q:"Khí khổng mở là con đường thoát hơi nước...",opts:["Chậm và thứ yếu","Nhanh và chủ yếu","Chỉ xảy ra ban đêm","Không liên quan đến thoát hơi nước"],a:1,why:"Khí khổng là con đường chủ yếu; cutin là con đường chậm."},
+{lesson:4,type:"mcq",difficulty:"easy",q:"Sản phẩm nào KHÔNG thuộc pha sáng?",opts:["O₂","ATP","NADPH","C₆H₁₂O₆"],a:3,why:"C₆H₁₂O₆ được tạo ở pha tối (chu trình Calvin)."},
+{lesson:4,type:"mcq",difficulty:"medium",q:"Thực vật C4 thường phân bố ở...",opts:["Nhiệt đới và cận nhiệt đới","Sa mạc khô hạn","Vùng cực lạnh","Dưới nước sâu"],a:0,why:"C4 thích nghi ánh sáng mạnh, nhiệt độ cao; CAM ở sa mạc."},
+{lesson:4,type:"mcq",difficulty:"hard",q:"Tại điểm bù ánh sáng:",opts:["Quang hợp = hô hấp","Quang hợp lớn nhất","Hô hấp bằng 0","Quang hợp bằng 0 và cây vẫn lớn nhanh"],a:0,why:"Điểm bù: cường độ quang hợp bằng cường độ hô hấp."},
+{lesson:6,type:"mcq",difficulty:"medium",q:"Giai đoạn nào của hô hấp hiếu khí tạo nhiều ATP nhất?",opts:["Đường phân","Chu trình Krebs","Chuỗi truyền electron","Lên men"],a:2,why:"Chuỗi truyền electron tạo khoảng 26–28 ATP."},
+{lesson:6,type:"mcq",difficulty:"hard",q:"Hô hấp hiếu khí khác lên men ở điểm nào?",opts:["Hiếu khí cần O₂ và thu nhiều ATP hơn","Lên men cần O₂","Hiếu khí không có đường phân","Hai quá trình thu số ATP bằng nhau"],a:0,why:"Lên men không có O₂, chỉ có đường phân, thu ít ATP."},
+{lesson:6,type:"mcq",difficulty:"expert",q:"Từ 1 glucose, giai đoạn nào tạo 2 pyruvate, 2 ATP, 2 NADH?",opts:["Đường phân","Chu trình Krebs","Chuỗi truyền electron","Lên men lactic"],a:0,why:"Đó là sản phẩm của đường phân ở tế bào chất."},
+
+/* ---------- ĐÚNG / SAI ---------- */
+{lesson:4,type:"tf",difficulty:"medium",q:"Chu trình Calvin diễn ra ở màng thylakoid.",opts:["Đúng","Sai"],a:1,why:"Chu trình Calvin diễn ra ở stroma; pha sáng mới ở màng thylakoid."},
+{lesson:4,type:"tf",difficulty:"easy",q:"Pha sáng cần ánh sáng và diễn ra ở màng thylakoid.",opts:["Đúng","Sai"],a:0,why:"Pha sáng có ánh sáng, ở màng thylakoid, tạo O₂, ATP, NADPH."},
+{lesson:4,type:"tf",difficulty:"easy",q:"Thực vật CAM thường sống ở sa mạc khô hạn.",opts:["Đúng","Sai"],a:0,why:"CAM thích nghi điều kiện khô hạn."},
+{lesson:6,type:"tf",difficulty:"medium",q:"Hô hấp hiếu khí diễn ra hoàn toàn trong tế bào chất.",opts:["Đúng","Sai"],a:1,why:"Đường phân ở tế bào chất; Krebs và chuỗi truyền electron ở ty thể."},
+{lesson:6,type:"tf",difficulty:"hard",q:"1 NADH cho nhiều ATP hơn 1 FADH₂ (2,5 so với 1,5).",opts:["Đúng","Sai"],a:0,why:"1 NADH ≈ 2,5 ATP; 1 FADH₂ ≈ 1,5 ATP."},
+{lesson:6,type:"tf",difficulty:"hard",q:"Lên men thu được nhiều ATP hơn hô hấp hiếu khí.",opts:["Đúng","Sai"],a:1,why:"Lên men chỉ thu khoảng 2 ATP từ đường phân."},
+{lesson:2,type:"tf",difficulty:"medium",q:"Hấp thụ chủ động ion khoáng đi cùng chiều gradient và không cần ATP.",opts:["Đúng","Sai"],a:1,why:"Chủ động đi ngược gradient và cần ATP."},
+{lesson:2,type:"tf",difficulty:"easy",q:"Khí khổng là con đường thoát hơi nước chủ yếu của lá.",opts:["Đúng","Sai"],a:0,why:"Con đường qua cutin chậm và thứ yếu."},
+{lesson:7,type:"tf",difficulty:"medium",q:"Tiêu hoá nội bào sử dụng enzyme của lysosome.",opts:["Đúng","Sai"],a:0,why:"Thức ăn vào tế bào được lysosome phân giải."}
+);
+/*#Q_END*/
+
+/*#LOGIC_START*/
+function norm(s){return String(s).toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/[^a-z0-9+]/g,'')}
+function has(t,k){const nk=norm(k);const s=(nk==='o2')?t.replace(/co2/g,'#'):t;return s.includes(nk)}
+function checkShort(q,text){
+  const t=norm(text); if(!t)return false;
+  if(q.bad&&q.bad.some(b=>has(t,b)))return false;
+  if(!(q.groups||[]).every(g=>g.some(k=>has(t,k))))return false;
+  if(q.seq){let p=-1;for(const k of q.seq){const j=t.indexOf(norm(k),p+1);if(j<0)return false;p=j}}
+  return true;
+}
+/*#LOGIC_END*/
+
+/* ---------- RANDOM CAO ---------- */
+// Fisher-Yates dùng crypto.getRandomValues (random thật hơn Math.random)
+function rnd(n){
+  try{const b=new Uint32Array(1);crypto.getRandomValues(b);return Math.floor(b[0]/4294967296*n)}
+  catch(e){return Math.floor(Math.random()*n)}
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]]}return a}
+
+// Lịch sử câu đã gặp: lần sau ưu tiên câu CHƯA gặp (hết thì tự reset)
+const SEEN_KEY='sinh11_seen_v1';
+function loadSeen(){try{return new Set(JSON.parse(localStorage.getItem(SEEN_KEY)||'[]'))}catch(e){return new Set()}}
+function saveSeen(s){try{localStorage.setItem(SEEN_KEY,JSON.stringify([...s]))}catch(e){}}
+function seenInfo(){const s=loadSeen();const n=BANK.filter(q=>s.has(q.q)).length;const el=$('seenPill');if(el)el.textContent=`Đã gặp: ${n}/${BANK.length} câu`}
+
+/* ---------- UI ---------- */
+lessonNames[7]="Bài 7 · Tiêu hoá ở động vật";
+$('lesson').insertAdjacentHTML('beforeend','<option value="7">Bài 7 · Tiêu hoá ở động vật</option>');
+$('kind').insertAdjacentHTML('beforeend','<option value="short">Chỉ trả lời ngắn</option>');
+$('kind').options[0].textContent='Tất cả dạng (trắc nghiệm + Đúng/Sai + trả lời ngắn)';
+document.head.insertAdjacentHTML('beforeend','<style>.sa{width:100%;margin-top:12px;background:#0d1426;color:var(--text);border:1px solid #394766;border-radius:10px;padding:11px;font:inherit;resize:vertical}.sa:focus{outline:2px solid #8b9dff}</style>');
+(function(){
+  const pills=document.querySelectorAll('.hero .pill');
+  if(pills[0])pills[0].textContent=BANK.length+' câu';
+  if(pills[1])pills[1].textContent='7 bài';
+  if(pills[2])pills[2].insertAdjacentHTML('afterend','<span class="pill">Trả lời ngắn</span><span class="pill" id="seenPill"></span>');
+  const foot=document.querySelector('.foot');
+  if(foot)foot.textContent='Ngân hàng gồm '+BANK.length+' câu: trắc nghiệm, Đúng/Sai và trả lời ngắn (chấm theo ý: đúng và đủ ý mới được điểm). Mỗi lượt random lại câu hỏi, thứ tự câu và thứ tự đáp án; ưu tiên câu bạn chưa gặp.';
+  $('flash').insertAdjacentHTML('afterend','<button class="secondary" id="quick">🎲 Random nhanh 20 câu</button><button class="secondary" id="resetSeen">Xoá lịch sử random</button>');
+  $('quick').onclick=()=>{$('lesson').value='all';$('kind').value='all';$('count').value='20';$('shuffle').value='yes';$('start').click()};
+  $('resetSeen').onclick=()=>{try{localStorage.removeItem(SEEN_KEY)}catch(e){}seenInfo()};
+  seenInfo();
+})();
+
+/* ---------- LOGIC LÀM BÀI ---------- */
+function getAns(q,i){
+  if(q.type==='short'){const el=document.querySelector(`[name="q${i}"]`);return el?el.value.trim():''}
+  const c=document.querySelector(`input[name="q${i}"]:checked`);return c?c.value:null;
+}
+function answered(q,v){return q.type==='short'?!!v:v!==null}
+function isRight(q,v){return q.type==='short'?(!!v&&checkShort(q,v)):(v!==null&&Number(v)===q.a)}
+function ansText(q){return q.type==='short'?q.ans:q.opts[q.a]}
+
+function selected(){
+  const pool=BANK.filter(q=>($('lesson').value==='all'||q.lesson===Number($('lesson').value))&&($('kind').value==='all'||q.type===$('kind').value));
+  const n=$('count').value==='all'?pool.length:Math.min(Number($('count').value),pool.length);
+  // câu chưa gặp lên trước (xáo trước rồi sort ổn định)
+  let seen=loadSeen();
+  if(pool.length&&pool.every(q=>seen.has(q.q))){pool.forEach(q=>seen.delete(q.q));saveSeen(seen)}
+  const ordered=shuffle(pool.slice()).sort((a,b)=>(seen.has(a.q)?1:0)-(seen.has(b.q)?1:0));
+  // tỉ lệ độ khó cũng được random nhẹ mỗi lượt
+  const w=[.2+(rnd(11)-5)/100,.3+(rnd(11)-5)/100,.3+(rnd(11)-5)/100];
+  const t={easy:Math.round(n*w[0]),medium:Math.round(n*w[1]),hard:Math.round(n*w[2])};t.expert=Math.max(0,n-t.easy-t.medium-t.hard);
+  const picked=[];
+  for(const lv of ['easy','medium','hard','expert']){picked.push(...ordered.filter(q=>q.difficulty===lv&&!picked.includes(q)).slice(0,t[lv]))}
+  if(picked.length<n)picked.push(...ordered.filter(q=>!picked.includes(q)).slice(0,n-picked.length));
+  const final=picked.slice(0,n);
+  final.forEach(q=>seen.add(q.q));saveSeen(seen);seenInfo();
+  const arr=$('shuffle').value==='no'?final.sort((a,b)=>BANK.indexOf(a)-BANK.indexOf(b)):shuffle(final);
+  return arr.map(q=>{
+    if(q.type==='short')return q;
+    const o=shuffle(q.opts.map((text,k)=>({text,k})));
+    return {...q,opts:o.map(x=>x.text),a:o.findIndex(x=>x.k===q.a)};
+  });
+}
+
+function renderQuiz(){
+  submitted=false;$('result').classList.add('hidden');$('flashcards').classList.add('hidden');$('quiz').classList.remove('hidden');$('quizForm').innerHTML='';
+  const dn={easy:'Dễ',medium:'Trung bình',hard:'Khó',expert:'Siêu khó'},tn={mcq:'Trắc nghiệm',tf:'Đúng/Sai',short:'Trả lời ngắn'};
+  current.forEach((q,i)=>{
+    const box=document.createElement('article');box.className='question';box.id='q'+i;
+    const body=q.type==='short'
+      ?`<textarea class="sa" name="q${i}" rows="2" placeholder="Gõ câu trả lời ngắn. Phải đúng và đủ ý mới được điểm."></textarea>`
+      :q.opts.map((o,j)=>`<label class="opt"><input type="radio" name="q${i}" value="${j}"><span><b>${q.type==='mcq'?String.fromCharCode(65+j):''}</b> ${esc(o)}</span></label>`).join('');
+    box.innerHTML=`<div class="qhead"><span class="num">${String(i+1).padStart(2,'0')}</span><div class="qtitle">${esc(q.q)}</div><span class="tag">${dn[q.difficulty]||'Trung bình'} · ${tn[q.type]}</span></div><div class="options ${q.type}">${body}</div><div class="feedback hidden" id="fb${i}"></div>`;
+    $('quizForm').appendChild(box);
+    box.querySelectorAll('input,textarea').forEach(el=>{el.addEventListener('change',updateProgress);el.addEventListener('input',updateProgress)});
+  });
+  buildNav();updateProgress();window.scrollTo({top:$('quiz').offsetTop-10,behavior:'smooth'});
+}
+function buildNav(){
+  const old=$('nav');if(old)old.remove();
+  document.querySelector('#quiz .panel').insertAdjacentHTML('beforeend','<div id="nav" aria-label="Danh sách câu hỏi"></div>');
+  $('nav').innerHTML=current.map((q,i)=>`<button type="button" class="chip" data-i="${i}">${i+1}</button>`).join('');
+  $('nav').onclick=e=>{const b=e.target.closest('.chip');if(!b)return;const el=$('q'+b.dataset.i);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})};
+}
+function navUpdate(){
+  const nav=$('nav');if(!nav)return;
+  nav.querySelectorAll('.chip').forEach((c,i)=>{const q=current[i];if(!q)return;const v=getAns(q,i);
+    c.className='chip'+(submitted?(isRight(q,v)?' ok':' no'):(answered(q,v)?' done':''))});
+}
+function updateProgress(){
+  let n=0;current.forEach((q,i)=>{if(answered(q,getAns(q,i)))n++});
+  $('progressText').textContent=`${n}/${current.length} câu`;$('answeredText').textContent=`Đã trả lời: ${n}`;
+  $('bar').style.width=(n/Math.max(1,current.length)*100)+'%';if(!submitted)$('liveScore').textContent='Đã chọn: '+n;
+  navUpdate();
+}
+function grade(){
+  if(submitted)return;submitted=true;let score=0,un=0;
+  current.forEach((q,i)=>{
+    const v=getAns(q,i),fb=$('fb'+i);fb.classList.remove('hidden');
+    if(!answered(q,v)){un++;fb.className='feedback incorrect';fb.innerHTML=`Chưa trả lời. <b>Đáp án:</b> ${esc(ansText(q))}<br>${esc(q.why)}`}
+    else if(isRight(q,v)){score++;fb.className='feedback correct';fb.innerHTML=`✓ Chính xác!<br>${esc(q.why)}`}
+    else{fb.className='feedback incorrect';fb.innerHTML=`✗ Sai hoặc thiếu ý. <b>Đáp án:</b> ${esc(ansText(q))}<br>${esc(q.why)}`}
+    document.querySelectorAll(`[name="q${i}"]`).forEach(x=>x.disabled=true);
+  });
+  $('liveScore').textContent=`Đúng: ${score}/${current.length}`;$('result').classList.remove('hidden');
+  const pct=Math.round(score/Math.max(1,current.length)*100);
+  const msg=pct>=90?'Quá cháy, kiến thức đang vào form! 🔥':pct>=75?'Ổn áp! Rà lại các câu sai là đẹp. 💪':pct>=50?'Có nền rồi, nhưng còn vài lỗ hổng cần vá. 🧠':'Không sao, xem giải thích rồi chiến lượt nữa. 🧬';
+  $('result').innerHTML=`<div class="kicker">Kết quả lượt làm</div><div class="result-score">${score}/${current.length} · ${pct}%</div><p>${msg}</p><p>Chưa trả lời: ${un} câu. Câu sai và bỏ trống đã hiện đáp án cùng giải thích bên dưới.</p><div class="actions"><button id="reviewWrong" class="secondary">Xem các câu sai/bỏ trống</button><button id="again">Làm lại bộ này</button><button id="newSet" class="secondary">🎲 Bộ mới (random lại)</button></div><div id="wrongList"></div>`;
+  $('reviewWrong').onclick=()=>{const list=$('wrongList');list.innerHTML='';
+    current.forEach((q,i)=>{if(!isRight(q,getAns(q,i))){const d=document.createElement('div');d.className='review-item';d.innerHTML=`<b>Câu ${i+1}:</b> ${esc(q.q)}<br><span class="muted">Đáp án: ${esc(ansText(q))}</span><br>${esc(q.why)}`;list.appendChild(d)}});
+    if(!list.children.length)list.innerHTML='<p>Không có câu sai. Quá ngon!</p>'};
+  $('again').onclick=()=>renderQuiz();
+  $('newSet').onclick=()=>{current=selected();renderQuiz()};
+  $('result').scrollIntoView({behavior:'smooth',block:'start'});updateProgress();
+}
+$('start').onclick=()=>{current=selected();if(!current.length){alert('Không có câu hỏi phù hợp. Hãy đổi bộ lọc nhé.');return}renderQuiz()};
+$('submit').onclick=grade;
+$('retry').onclick=()=>{current=selected();if(!current.length)return;renderQuiz()};
+$('flash').onclick=()=>{
+  const arr=BANK.filter(q=>($('lesson').value==='all'||q.lesson===Number($('lesson').value))&&($('kind').value==='all'||q.type===$('kind').value));
+  $('quiz').classList.add('hidden');$('result').classList.add('hidden');$('flashcards').classList.remove('hidden');
+  $('flashContent').innerHTML=arr.map((q,i)=>`<div class="review-item"><span class="tag">${lessonNames[q.lesson].split(' · ')[0]}</span><p><b>${i+1}. ${esc(q.q)}</b></p><p><b>Đáp án:</b> ${esc(ansText(q))}</p><p>${esc(q.why)}</p></div>`).join('');
+  $('flashcards').scrollIntoView({behavior:'smooth'});
+};
+
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter'&&!$('quiz').classList.contains('hidden')&&!submitted)grade()});
+$('quizForm').addEventListener('submit',e=>e.preventDefault());
+
 </script></body></html>
